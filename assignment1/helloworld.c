@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// name: Jeongkyu Lee 
+// name: Jonathan
 // email: jeo.lee@northeastern.edu
 
 int main() {
