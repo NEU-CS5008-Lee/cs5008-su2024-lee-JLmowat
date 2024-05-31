@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Jonathan Mowat
+// email: mowat.j@northeastern.edu
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -31,6 +31,7 @@ void generate_num(int* arr){
   }
 }
 
+
 void selection_sort_2arr(int* source, int* dest, bool* valid)
 {
   int smallest;      // current smallest element
@@ -39,6 +40,19 @@ void selection_sort_2arr(int* source, int* dest, bool* valid)
 
   // INSERT YOUR CODE HERE
 
+    smallest = -1;
+    for (int j = 0; j<LIMIT; j++){
+      if (valid[j]) {
+        if (source[smallest]>source[j] || smallest == -1) { 
+          smallest = j;
+        }
+      }
+        
+    } 
+    dest[i] = source[smallest];
+    //source[smallest] = 99999;
+    valid[smallest] = false; 
+    //print_valid(valid, 10);
   }
 }
 
@@ -50,7 +64,17 @@ void selection_sort_1arr(int* source)
 
   for (int i=0; i<LIMIT; i++) {
 
-  // INSERT YOUR CODE HERE
+    // INSERT YOUR CODE HERE
+    smallest = i;
+    for (int j = i+1; j<LIMIT; j++){
+        if (source[smallest]>source[j]) {
+            smallest = j;
+        }
+    } 
+    temp = source[i];
+    source[i] = source[smallest];
+    source[smallest] = temp; 
+
 
   }
 }
