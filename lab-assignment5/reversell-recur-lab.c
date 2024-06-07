@@ -1,4 +1,5 @@
-//enter your name and email here
+// Jonathan Mowat
+// mowat.j@northeastern.edu
 #include<stdio.h>
 #include<stdlib.h>
 typedef struct node
@@ -14,17 +15,37 @@ typedef struct list{
 /*-----creating the nodes----------*/
 node_t* newNode(int num)
 {
- 
+  node_t *newNode=(node_t*)malloc(sizeof(node_t));
+ if(newNode==NULL){
+     exit(1);
+ }
+newNode->data=num;
+newNode->next=NULL;
+return newNode;
 }
 /*---creating linked list----*/
 List* init_LL(){
+    List* l;
+    l=(List*)malloc(sizeof(List));
+    if(l==NULL){
+     exit(1);
+    }
+    l->head=NULL;
+    
+    return l;
     
 }
 
 /*---Insert the nodes at the begining of the list---*/
 void insertFirst(List* l, int data){
-    
-
+    node_t* temp=newNode(data);
+    if(l->head==NULL){
+        l->head=temp;
+        return;
+    }
+    temp->next=l->head;
+    l->head=temp;
+    return;
 }
 
 /*----display the output--------*/
@@ -44,12 +65,17 @@ void display(List* l)
 void reverse(List* l, node_t* ptr)
 {
     
-    
-    
-    
 //insert your code here
-    
-    
+
+if (ptr->next == NULL){
+    l->head = ptr;
+    return;
+}
+
+reverse(l, ptr->next); 
+ptr->next->next = ptr;
+ptr->next = NULL;
+
 }
 
 /*----Free the nodes-----*/
