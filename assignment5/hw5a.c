@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Jonathan Mowat
+// email: mowat.j@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,13 +34,38 @@ int findMin(int a, int b){
 void mergeIt(
 	   char* data,
 	   int leftStart,
-	   int leftStop,
-	   int rightStart,
+	   int leftStop, // mid point
+	   int rightStart, // mid point + 1
 	   int rightStop) {
   
 
   // ADD YOUR CODE HERE
-  
+
+  int leftP = leftStart;
+  int rightP = rightStart;
+  int tmpP = leftStart;
+  char tmp[LIMIT];
+
+// merge two sub arrays while both are in range of thier sub arrays
+  while(leftP<=leftStop && rightP<=rightStop){
+      if (data[leftP]<=data[rightP]) {
+          tmp[tmpP++] = data[leftP++];
+      } else {
+          tmp[tmpP++] = data[rightP++];
+      }
+  }
+
+// add the remaining elements if a sub array is longer than the other
+  while(leftP<=leftStop)
+      tmp[tmpP++] = data[leftP++];
+  while(rightP<=rightStop)
+      tmp[tmpP++] = data[rightP++];
+
+// add the sorted elements back to the orignal array
+  for(int i=leftStart; i<=rightStop; i++){
+      data[i] = tmp[i];
+  }
+
   return;
 }
 
