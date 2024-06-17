@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Jonathan Mowat
+// email: mowat.j@northeastern.edu
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -244,18 +244,44 @@ void freeQueue(queue_t* qp) {
 
 void preorder (tnode_t* np) {
   // INSERT YOUR CODE HERE
+  if (np == NULL) {
+    return;
+  }
+  else{
+    printf("%c ", np->data); // Node
+    preorder(np->left); // left
+    preorder(np->right); // right
+  }
 
   return;
 }
 
 void inorder (tnode_t* np) {
   // INSERT YOUR CODE HERE
+  if (np == NULL) {
+    return;
+  }
+  else{
+    inorder(np->left); // left
+    printf("%c ", np->data); // Node
+    inorder(np->right); // right
+    
+  }
   
   return;
 }
 
 void postorder (tnode_t* np) {
   // INSERT YOUR CODE HERE
+  if (np == NULL) {
+    return;
+  }
+  else{
+    postorder(np->left); // left
+    postorder(np->right); // right
+    printf("%c ", np->data); // Node
+  }
+  
   
   return;
 }
@@ -263,7 +289,22 @@ void postorder (tnode_t* np) {
 
 void breadthFirst (tnode_t* root) {
   // INSERT YOUR CODE HERE
-  
+  tnode_t* temp = NULL;
+  queue_t* Q = newQueue();
+  if (root != NULL) {
+    enqueue(Q, root);
+    while (!isEmpty(Q)) {
+      temp = dequeue(Q);
+      printf("%c ", temp->data);
+      if (temp->left != NULL) {
+        enqueue(Q, temp->left);
+      }
+      if (temp->right != NULL) {
+        enqueue(Q, temp->right);
+      }
+    }
+  }
+  freeQueue(Q);
   return;
 }
 
