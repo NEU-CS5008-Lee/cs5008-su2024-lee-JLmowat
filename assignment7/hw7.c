@@ -1,5 +1,5 @@
-// name: <your name here>
-// email: <your email here>
+// name: Jonathan Mowat
+// email: mowat.j@northeastern.edu
 
 // format of document is a bunch of data lines beginning with an integer (rank which we ignore)
 // then a ',' followed by a double-quoted string (city name)
@@ -81,37 +81,102 @@ int main () {
       strcpy(temp,"");       // temp = ""
 
       if (nextChar >= strlen(inputLine)){
-	// if no input string then go to ERRORSTATE
-	state = ERRORSTATE;
+        // if no input string then go to ERRORSTATE
+        state = ERRORSTATE;
       } 
 
       while ((state != ERRORSTATE) && (state != ACCEPTSTATE)) {
-	switch (state) {
-	  case STARTSTATE:
-	    // look a digit to confirm a valid line
-	    if (isDigit(inputLine[nextChar])) {
-	      state = S1;
-	      appendChar(temp, inputLine[nextChar]);
-	    } else {
-	      state = ERRORSTATE;
-	    }  
-	    break;
+        switch (state) {
+          case STARTSTATE:
+            // look a digit to confirm a valid line
+            if (isDigit(inputLine[nextChar])) {
+              state = S1;
+              appendChar(temp, inputLine[nextChar]);
+            } else {
+              state = ERRORSTATE;
+            }  
+            break;
+
+          // ADD YOUR CODE HERE
+          case S1: //Collect all the digits at the begining of each line until there is a comma
+            if (isDigit(inputLine[nextChar])) {
+              // state = S1;
+              appendChar(temp, inputLine[nextChar]);
+            } else if (inputLine[nextChar] == ',') {
+              lineNum = atoi(temp); // convert temp to integer
+              strcpy(temp,""); // reset temp to empty
+              state = S2;
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
 
 
-	  // ADD YOUR CODE HERE
- 
-	    
-	  case ACCEPTSTATE:
-	    // nothing to do - we are done!
-	    break;
-	    
-	  default:
-	    state = ERRORSTATE;
-	    break;
-	} // end switch
+          case S2: // Check for a " to start saving the city location
+            if (inputLine[nextChar] == '"') {
+              state = S3;
+              strcpy(cityStr,""); // reset cityStr to empty
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
 
-	// advance input
-	nextChar++;
+          case S3: // Check for " to end saving the city location
+            if (inputLine[nextChar] != '"') {
+              appendChar(cityStr, inputLine[nextChar]);
+            } else {
+              state = S4;
+            }
+            break;
+
+          case S4: // Check for , for the population numbers
+            if (inputLine[nextChar] == ',') {
+              state = S5;
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+
+           case S5:
+            // Check if population is missing (X) or present "123"
+            if (inputLine[nextChar] == '"') {
+              state = S6;
+            } else if (inputLine[nextChar] == '(') {
+              state = ACCEPTSTATE;
+              popInt = 0;  // population data is missing
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+          
+          case S6:
+            // gather digits for the population field until the closing quote is found
+            if (isDigit(inputLine[nextChar])) {
+              appendChar(temp, inputLine[nextChar]);
+            } else if (inputLine[nextChar] == ',') {
+              // Skip the commas in the population number
+            } else if (inputLine[nextChar] == '"') {
+              state = ACCEPTSTATE;
+              popInt = atoi(temp);  // convert population to integer
+            } else {
+              state = ERRORSTATE;
+            }
+            break;
+
+
+      
+            
+          case ACCEPTSTATE:
+            // nothing to do - we are done!
+            break;
+            
+          default:
+            state = ERRORSTATE;
+            break;
+        } // end switch
+
+        // advance input
+        nextChar++;
 	
       }	// end while state machine loop
 
