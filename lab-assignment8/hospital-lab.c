@@ -1,6 +1,6 @@
 /* Lab Assignment for Hospital ER */
-//enter your name here
-//enter your email here
+// name: Jonathan Mowat
+// email: mowat.j@northeastern.edu
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -50,13 +50,37 @@ void heapify(pq*p2,int n, int i ){
     int rchild=2*i+2;/*right=2*i+2*/
     /*insert your code here*/
 
+    if (lchild < n && p2->heap[lchild].priority >= p2->heap[largest].priority ){
+        largest = lchild;
+    }
+
+    if (rchild < n && p2->heap[rchild].priority >= p2->heap[largest].priority ){
+         largest = rchild;
+    }
+    
+    if (largest != i) {
+        swap(&(p2->heap[largest]), &(p2->heap[i]));
+        heapify(p2, n, largest);
+    }
+
 }
 
 /* To shift the new node (inserted at the end) up at its appropriate position in order to satisfy the max heap property */ 
 void shiftUp(pq* p2,int i)
 {
     /*insert your code here*/
-       
+// deal with single element i ==0
+// initialize parent node
+// use a while loop to check the priorities and swap
+
+    
+    int parent = (i-1)/2;
+	while(i > 0 && p2->heap[i].priority > p2->heap[parent].priority){
+		swap( &(p2->heap[i]), &(p2->heap[parent])  );
+		i = parent;
+		parent = (i-1)/2;
+	}
+  return;
     
 }
  
