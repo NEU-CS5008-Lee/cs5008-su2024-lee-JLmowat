@@ -1,12 +1,10 @@
-// name: <your name here>
-// email: <your email here>
+// name: Jonathan Mowat
+// email: mowat.j@northeastern.edu
 
 
 // please start with a copy of your hw7.c, rename it to hw.8
 // and then complete the assignment
 
-// name: Jonathan Mowat
-// email: mowat.j@northeastern.edu
 
 // format of document is a bunch of data lines beginning with an integer (rank which we ignore)
 // then a ',' followed by a double-quoted string (city name)
